@@ -4,8 +4,8 @@ export async function generateMetadata() {
   const settings = await prisma.settings.findUnique({ where: { id: 'default' } });
   const siteName = settings?.siteName || 'Our Website';
   return {
-    title: `${name} | ${siteName}`,
-    description: `${name} for ${siteName}`
+    title: `Terms of Service | ${siteName}`,
+    description: `Terms of Service for ${siteName}`
   };
 }
 
@@ -20,13 +20,13 @@ export default async function Page() {
       <div className="border-b border-gray-200">
         <div className="container-blog py-8 lg:py-10">
           <p className="text-[10px] font-bold uppercase tracking-widest text-[#1a2b3c] mb-2">Legal</p>
-          <h1 className="serif-headline text-2xl lg:text-3xl">${name}</h1>
+          <h1 className="serif-headline text-2xl lg:text-3xl">Terms of Service</h1>
         </div>
       </div>
 
       <div className="container-blog py-10 lg:py-14">
         <div className="max-w-3xl mx-auto prose prose-slate prose-headings:font-serif prose-headings:text-[#1a2b3c] prose-a:text-blue-600">
-          <p className="lead">Welcome to {siteName}. This page outlines the ${name.toLowerCase()} that governs your use of our platform.</p>
+          <p className="lead">Welcome to {siteName}. This page outlines the terms of service that governs your use of our platform.</p>
           
           <h2>1. Introduction</h2>
           <p>{siteName} is committed to bringing you {siteDescription.toLowerCase()}. By accessing our website, you agree to these terms.</p>
@@ -38,7 +38,7 @@ export default async function Page() {
           <p>Our platform may contain links to third-party websites or services that are not owned or controlled by {siteName}. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.</p>
           
           <h2>4. Contact Information</h2>
-          <p>If you have any questions about this ${name}, please contact us at:</p>
+          <p>If you have any questions about this Terms of Service, please contact us at:</p>
           <ul>
             <li><strong>Email:</strong> <a href={`mailto:${contactEmail}`}>{contactEmail}</a></li>
             {settings?.contactPhone && <li><strong>Phone:</strong> {settings.contactPhone}</li>}
