@@ -8,7 +8,6 @@ const secondaryLinks = [
   { name: "Privacy Policy", href: "/privacy" },
   { name: "Terms of Service", href: "/terms" },
   { name: "Disclaimer", href: "/disclaimer" },
-  { name: "Admin", href: "/admin" },
 ];
 
 export default async function Footer() {
