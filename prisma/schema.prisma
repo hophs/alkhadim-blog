@@ -138,6 +138,10 @@ model Settings {
   customHeadCode     String?
   customBodyStart    String?
   customFooterCode   String?
+
+  contactEmail       String  @default("contact@example.com")
+  contactPhone       String?
+  contactAddress     String?
 }
 
 model Subscriber {

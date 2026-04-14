@@ -69,6 +69,11 @@ export async function PUT(req: NextRequest) {
       customHeadCode: body.customHeadCode,
       customBodyStart: body.customBodyStart,
       customFooterCode: body.customFooterCode,
+      
+      // Contact Info
+      contactEmail: body.contactEmail,
+      contactPhone: body.contactPhone,
+      contactAddress: body.contactAddress,
     },
     create: { id: "default" },
   });
