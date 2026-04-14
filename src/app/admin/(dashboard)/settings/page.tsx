@@ -54,6 +54,9 @@ interface SettingsData {
   customHeadCode: string;
   customBodyStart: string;
   customFooterCode: string;
+  contactEmail: string;
+  contactPhone: string;
+  contactAddress: string;
 }
 
 export default function SettingsPage() {
@@ -111,6 +114,9 @@ export default function SettingsPage() {
     customHeadCode: "",
     customBodyStart: "",
     customFooterCode: "",
+    contactEmail: "",
+    contactPhone: "",
+    contactAddress: "",
   });
 
   useEffect(() => {
@@ -144,6 +150,7 @@ export default function SettingsPage() {
   const tabs = [
     { id: 'general', label: 'General & SEO', icon: Globe },
     { id: 'branding', label: 'Branding', icon: LayoutTemplate },
+    { id: 'contact', label: 'Contact Info', icon: Mail },
     { id: 'apis', label: 'APIs & Automation', icon: Database },
     { id: 'ads', label: 'Advertisements', icon: CircleDollarSign },
     { id: 'newsletter', label: 'Newsletter & SMTP', icon: Mail },
@@ -460,6 +467,27 @@ export default function SettingsPage() {
               </div>
               )}
 
+          </div>
+        )}
+
+        {activeTab === 'contact' && (
+          <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-5 animate-fade-in">
+             <h3 className="font-semibold text-slate-700 border-b pb-3">Contact Information</h3>
+             <p className="text-sm text-slate-500">This information will be displayed on the Contact, Terms, and Privacy pages.</p>
+             <div className="grid gap-6 mt-4 sm:grid-cols-2">
+                 <div>
+                     <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Contact Email</label>
+                     <input type="email" value={form.contactEmail || ""} onChange={(e) => setForm({ ...form, contactEmail: e.target.value })} className="w-full text-sm border border-slate-200 rounded-lg p-2" placeholder="contact@yourblog.com" />
+                 </div>
+                 <div>
+                     <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Contact Phone</label>
+                     <input type="text" value={form.contactPhone || ""} onChange={(e) => setForm({ ...form, contactPhone: e.target.value })} className="w-full text-sm border border-slate-200 rounded-lg p-2" placeholder="+1 (555) 123-4567" />
+                 </div>
+                 <div className="sm:col-span-2">
+                     <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Physical Address</label>
+                     <textarea rows={3} value={form.contactAddress || ""} onChange={(e) => setForm({ ...form, contactAddress: e.target.value })} className="w-full text-sm border border-slate-200 rounded-lg p-2" placeholder="123 Blog Street, Web City, WW 12345" />
+                 </div>
+             </div>
           </div>
         )}
 
