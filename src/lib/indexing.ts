@@ -38,11 +38,11 @@ export async function submitUrlToIndex(url: string, type: "URL_UPDATED" | "URL_D
       body: body,
     });
 
-    console.log(`[Indexing API] Submitted URL to Google: \`, response.status);
+    console.log(`[Indexing API] Submitted URL to Google: ${url}`, response.status);
     return true;
 
   } catch (error: any) {
-    console.error(`[Indexing API] Error submitting \:`, error?.message || error);
+    console.error(`[Indexing API] Error submitting ${url}:`, error?.message || error);
     return false;
   }
 }
