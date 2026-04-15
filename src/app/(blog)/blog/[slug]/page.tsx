@@ -346,21 +346,7 @@ export default async function BlogPostPage({ params }: Props) {
           )}
 
           {/* ─── NEWSLETTER ─── */}
-          <section className="bg-[#1a2b3c] text-white p-6 rounded-xl shadow-lg">
-            <Mail className="w-10 h-10 mb-4" />
-            <h3 className="text-xl font-bold mb-2">Weekly Briefing</h3>
-            <p className="text-slate-300 text-sm mb-6">
-              Get the most important political and geopolitical insights delivered to your inbox every Sunday.
-            </p>
-            <input
-              type="email"
-              className="w-full bg-white/10 border border-white/20 rounded-lg py-2 px-4 text-sm mb-4 placeholder:text-white/50 focus:ring-white focus:border-white outline-none text-white"
-              placeholder="Your email address"
-            />
-            <button className="w-full bg-white text-[#1a2b3c] py-2 rounded-lg font-bold hover:bg-slate-100 transition-colors">
-              Subscribe Now
-            </button>
-          </section>
+          <SidebarSubscribe />
 
           {/* ─── AD: Sidebar Bottom ─── */}
           <BlogAdSlots placement="sidebarBottom" />

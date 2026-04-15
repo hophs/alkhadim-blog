@@ -1,0 +1,5 @@
+﻿const fs = require('fs');
+let content = fs.readFileSync('src/app/(blog)/blog/[slug]/page.tsx', 'utf-8');
+const search = '<section className="bg-[#1a2b3c] text-white p-6 rounded-xl shadow-lg">\r\n            <Mail className="w-10 h-10 mb-4" />\r\n            <h3 className="text-xl font-bold mb-2">Weekly Briefing</h3>\r\n            <p className="text-slate-300 text-sm mb-6">\r\n              Get the most important political and geopolitical insights delivered to your inbox every Sunday.\r\n            </p>\r\n            <input\r\n              type="email"\r\n              className="w-full bg-white/10 border border-white/20 rounded-lg py-2 px-4 text-sm mb-4 placeholder:text-white/50 focus:ring-white focus:border-white outline-none text-white"\r\n              placeholder="Your email address"\r\n            />\r\n            <button className="w-full bg-white text-[#1a2b3c] py-2 rounded-lg font-bold hover:bg-slate-100 transition-colors">\r\n              Subscribe Now\r\n            </button>\r\n          </section>';
+content = content.replace(search, '<SidebarSubscribe />');
+fs.writeFileSync('src/app/(blog)/blog/[slug]/page.tsx', content);
