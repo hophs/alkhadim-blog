@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Newspaper, Twitter, Facebook, Linkedin, Rss } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 
@@ -24,10 +25,16 @@ export default async function Footer() {
           {/* Brand */}
           <div className="lg:col-span-4">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 bg-[#1a2b3c] rounded-[0.25rem] flex items-center justify-center">
-                <Newspaper className="w-4 h-4 text-white" />
-              </div>
-              <span className="serif-headline text-lg text-[#1a2b3c]">{siteName}</span>
+              {settings?.logoUrl ? (
+                <Image src={settings.logoUrl} alt={settings?.siteName || "Logo"} width={140} height={40} className="object-contain h-10 w-auto" />
+              ) : (
+                <>
+                  <div className="w-8 h-8 bg-[#1a2b3c] rounded-[0.25rem] flex items-center justify-center">
+                    <Newspaper className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="serif-headline text-lg text-[#1a2b3c]">{siteName}</span>
+                </>
+              )}
             </Link>
             <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
               {siteDescription}
