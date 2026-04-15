@@ -1,25 +1,26 @@
-import { GoogleAuth } from "google-auth-library";
-import fs from "fs";
-import path from "path";
+﻿import { GoogleAuth } from "google-auth-library";
+import { prisma } from "@/lib/prisma";
 
 const SCOPES = ["https://www.googleapis.com/auth/indexing"];
-const KEY_FILE_PATH = path.join(process.cwd(), "google-service-account.json");
 
 export async function submitUrlToIndex(url: string, type: "URL_UPDATED" | "URL_DELETED" = "URL_UPDATED") {
   try {
-    // Check if user set up the service account
-    if (!fs.existsSync(KEY_FILE_PATH)) {
-      console.log(`[Indexing API] Skipping auto-indexing: ${KEY_FILE_PATH} not found. Please see docs for setup.`);
+    const settings = await prisma.settings.findUnique({ where: { id: "default" } });
+
+    if (!settings || !settings.googleServiceAccountKey) {
+      console.log("[Indexing API] Skipping auto-indexing: Google Service Account key not found in settings. Please see docs for setup.");
       return false; // Silently skip if no service account
     }
 
+    const credentials = JSON.parse(settings.googleServiceAccountKey);
+
     const auth = new GoogleAuth({
-      keyFile: KEY_FILE_PATH,
+      credentials,
       scopes: SCOPES,
     });
 
     const client = await auth.getClient();
-    const targetUrl = 'https://indexing.googleapis.com/v3/urlNotifications:publish';
+    const targetUrl = "https://indexing.googleapis.com/v3/urlNotifications:publish";
 
     // Prepare indexing body
     const body = JSON.stringify({
@@ -37,11 +38,11 @@ export async function submitUrlToIndex(url: string, type: "URL_UPDATED" | "URL_D
       body: body,
     });
 
-    console.log(`[Indexing API] Submitted URL to Google: ${url}`, response.status);
+    console.log(`[Indexing API] Submitted URL to Google: \`, response.status);
     return true;
 
   } catch (error: any) {
-    console.error(`[Indexing API] Error submitting ${url}:`, error?.message || error);
+    console.error(`[Indexing API] Error submitting \:`, error?.message || error);
     return false;
   }
 }

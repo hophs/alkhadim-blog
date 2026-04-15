@@ -142,6 +142,8 @@ model Settings {
   contactEmail       String  @default("contact@example.com")
   contactPhone       String?
   contactAddress     String?
+  
+  googleServiceAccountKey String? @db.Text
 }
 
 model Subscriber {

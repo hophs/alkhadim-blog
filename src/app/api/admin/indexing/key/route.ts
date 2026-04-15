@@ -1,10 +1,7 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import fs from "fs";
-import path from "path";
-
-const KEY_FILE_PATH = path.join(process.cwd(), "google-service-account.json");
+import { prisma } from "@/lib/prisma";
 
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
@@ -12,7 +9,9 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const exists = fs.existsSync(KEY_FILE_PATH);
+  const settings = await prisma.settings.findUnique({ where: { id: "default" } });
+  const exists = !!settings?.googleServiceAccountKey;
+  
   return NextResponse.json({ exists });
 }
 
@@ -45,7 +44,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid JSON file structure" }, { status: 400 });
     }
 
-    fs.writeFileSync(KEY_FILE_PATH, fileContents, "utf8");
+    await prisma.settings.upsert({
+      where: { id: "default" },
+      update: { googleServiceAccountKey: fileContents },
+      create: { id: "default", googleServiceAccountKey: fileContents }
+    });
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
@@ -61,9 +64,11 @@ export async function DELETE(req: Request) {
   }
 
   try {
-    if (fs.existsSync(KEY_FILE_PATH)) {
-      fs.unlinkSync(KEY_FILE_PATH);
-    }
+    await prisma.settings.upsert({
+      where: { id: "default" },
+      update: { googleServiceAccountKey: null },
+      create: { id: "default", googleServiceAccountKey: null }
+    });
     return NextResponse.json({ success: true });
   } catch (error: any) {
     return NextResponse.json({ error: "Failed to delete key file" }, { status: 500 });
