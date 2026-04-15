@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -11,6 +11,16 @@ export default function LoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
+  const [siteName, setSiteName] = useState("Blog");
+
+  useEffect(() => {
+    fetch("/api/settings")
+      .then(res => res.json())
+      .then(data => {
+        if (data?.siteName) setSiteName(data.siteName);
+      })
+      .catch(() => {});
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,7 +56,7 @@ export default function LoginPage() {
             <Zap className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-2xl font-extrabold tracking-tight">
-            <span className="gradient-text">AutoBlog</span> Admin
+            <span className="gradient-text">{siteName}</span> Admin
           </h1>
           <p className="text-slate-500 text-sm mt-2">Sign in to your dashboard</p>
         </div>

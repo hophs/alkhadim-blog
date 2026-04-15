@@ -39,7 +39,7 @@ export async function broadcastLatestPost() {
         },
       });
 
-      const siteName = settings.siteName || "AutoBlog";
+      const siteName = settings.siteName || "";
       const siteUrl = settings.siteUrl || "http://localhost:3000";
       const postUrl = `${settings.siteUrl}/blog/${latestPost.slug}`;
 

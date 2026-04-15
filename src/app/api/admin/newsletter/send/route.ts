@@ -8,7 +8,7 @@ export const maxDuration = 60; // Allow 60s for email broadcasting
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
   
-  if (!session || (session.user as any)?.role !== "ADMIN") {
+  if (!session || (session.user as any)?.role !== "admin") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

@@ -37,13 +37,15 @@ const navItems = [
 export default function AdminSidebar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [siteName, setSiteName] = useState("AutoBlog");
+  const [siteName, setSiteName] = useState("Blog");
+  const [logoUrl, setLogoUrl] = useState("");
 
   useEffect(() => {
     fetch("/api/settings")
       .then((res) => res.json())
       .then((data) => {
         if (data?.siteName) setSiteName(data.siteName);
+        if (data?.logoUrl) setLogoUrl(data.logoUrl);
       })
       .catch((err) => console.error("Failed to load sitename:", err));
   }, []);
@@ -77,9 +79,13 @@ export default function AdminSidebar() {
       {/* Logo */}
       <div className="p-5 border-b border-slate-800 flex items-center justify-between">
         <Link href="/admin" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-amber-400 flex items-center justify-center">
-            <Zap className="w-4 h-4 text-white" />
-          </div>
+          {logoUrl ? (
+            <img src={logoUrl} alt={siteName} className="w-8 h-8 rounded-lg object-contain" />
+          ) : (
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-amber-400 flex items-center justify-center">
+              <Zap className="w-4 h-4 text-white" />
+            </div>
+          )}
           <span className="text-lg font-bold">
             {siteName}
           </span>

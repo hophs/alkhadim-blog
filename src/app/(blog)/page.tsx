@@ -15,6 +15,10 @@ import BlogAdSlots from "@/components/BlogAdSlots";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
+  const settings = await prisma.settings.findFirst();
+  const siteName = settings?.siteName || "";
+  const siteDescription = settings?.siteDescription || "";
+
   const posts = await prisma.post.findMany({
     where: { published: true },
     orderBy: { createdAt: "desc" },
@@ -99,11 +103,10 @@ export default async function HomePage() {
                 <Newspaper className="w-7 h-7 text-white" />
               </div>
               <h1 className="serif-headline text-3xl lg:text-5xl mb-4">
-                Welcome to <span className="text-[#1a2b3c]">AutoBlog</span>
+                Welcome to <span className="text-[#1a2b3c]">{siteName}</span>
               </h1>
               <p className="text-gray-500 text-lg leading-relaxed mb-8">
-                Your AI-powered news platform. Auto-generated, expertly curated
-                articles delivered fresh every hour.
+                {siteDescription}
               </p>
               <Link
                 href="/admin"

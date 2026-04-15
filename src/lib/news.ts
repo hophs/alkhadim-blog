@@ -201,7 +201,7 @@ async function scrapeArticleContent(url: string): Promise<string | null> {
     const res = await fetch(url, {
       signal: controller.signal,
       headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; AutoBlogBot/1.0)",
+        "User-Agent": "Mozilla/5.0 (compatible; SiteBot/1.0)",
         "Accept": "text/html",
       },
     });

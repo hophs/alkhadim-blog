@@ -49,14 +49,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
 
-  const post = await prisma.post.findUnique({
-    where: { slug },
-    include: {
-      category: true,
-      author: { select: { name: true, image: true } },
-      tags: { include: { tag: true } },
-    },
-  });
+  const [post, settings] = await Promise.all([
+    prisma.post.findUnique({
+      where: { slug },
+      include: {
+        category: true,
+        author: { select: { name: true, image: true } },
+        tags: { include: { tag: true } },
+      },
+    }),
+    prisma.settings.findFirst()
+  ]);
 
   if (!post || !post.published) notFound();
 
@@ -101,19 +104,19 @@ export default async function BlogPostPage({ params }: Props) {
     dateModified: post.updatedAt.toISOString(),
     author: {
       "@type": "Person",
-      name: post.author?.name || "AutoBlog",
+      name: post.author?.name || settings?.siteName || "Blog",
     },
     publisher: {
       "@type": "Organization",
-      name: "AutoBlog",
+      name: settings?.siteName || "Blog",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://autoblog.com"}/icon.png`,
+        url: settings?.logoUrl || `${process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"}/icon.png`,
       },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://autoblog.com"}/blog/${post.slug}`,
+      "@id": `${process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"}/blog/${post.slug}`,
     },
     ...(post.category && { articleSection: post.category.name }),
     wordCount: post.content.replace(/<[^>]*>/g, "").split(/\s+/).length,
@@ -180,7 +183,7 @@ export default async function BlogPostPage({ params }: Props) {
                 )}
                 <div>
                   <p className="font-bold text-slate-900">
-                    {post.author?.name || "AutoBlog"}
+                    {post.author?.name || settings?.siteName || "Blog"}
                   </p>
                   <p className="text-sm text-slate-500">
                     {formatDate(date)} &bull; {post.readTime} min read

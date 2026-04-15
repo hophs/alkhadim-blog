@@ -66,7 +66,7 @@ export default function Header({ settings, categories = [] }: { settings?: any, 
                 <div className="w-10 h-10 bg-[#1a2b3c] rounded-[0.25rem] flex items-center justify-center">
                   <Newspaper className="w-5 h-5 text-white" />
                 </div>
-                <span className="serif-headline text-2xl text-[#1a2b3c] font-bold">{settings?.siteName || "AutoBlog"}</span>
+                <span className="serif-headline text-2xl text-[#1a2b3c] font-bold">{settings?.siteName || ""}</span>
               </>
             )}
           </Link>

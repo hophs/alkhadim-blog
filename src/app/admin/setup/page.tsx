@@ -45,7 +45,7 @@ export default function SetupPage() {
             <Zap className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-2xl font-extrabold tracking-tight">
-            Setup <span className="gradient-text">AutoBlog</span>
+            Setup <span className="gradient-text">Blog</span>
           </h1>
           <p className="text-slate-500 text-sm mt-2">
             Create your admin account to get started

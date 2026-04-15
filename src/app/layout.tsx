@@ -47,6 +47,11 @@ export async function generateMetadata(): Promise<Metadata> {
     creator: siteName,
     publisher: siteName,
     metadataBase: new URL(siteUrl),
+    icons: {
+      icon: faviconUrl,
+      shortcut: faviconUrl,
+      apple: faviconUrl,
+    },
     alternates: {
       canonical: siteUrl,
     },

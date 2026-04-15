@@ -105,7 +105,7 @@ export default function IndexingSetupPage() {
                 <h3 className="font-bold text-lg text-slate-900 mb-2">Step 1: Create a Google Cloud Project & Service Account</h3>
                 <ol className="list-decimal list-inside space-y-2 text-sm">
                   <li>Go to the <a href="https://console.cloud.google.com/" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">Google Cloud Console</a>.</li>
-                  <li>Create a new project (e.g., "AutoBlog Indexing").</li>
+                  <li>Create a new project (e.g., "Blog Indexing").</li>
                   <li>Navigate to <strong>APIs & Services &gt; Library</strong> and search for <strong>"Web Search Indexing API"</strong>. Click <strong>Enable</strong>.</li>
                   <li>Go to <strong>IAM & Admin &gt; Service Accounts</strong> and click <strong>Create Service Account</strong>.</li>
                   <li>Give it a name (e.g., <code>indexing-bot</code>) and click <strong>Done</strong>.</li>
