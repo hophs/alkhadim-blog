@@ -15,6 +15,7 @@ import {
 import { formatDate } from "@/lib/utils";
 import BlogAdSlots from "@/components/BlogAdSlots";
 import PostComments from "@/components/PostComments";
+import SidebarSubscribe from "@/components/SidebarSubscribe";
 
 export const dynamic = "force-dynamic";
 
