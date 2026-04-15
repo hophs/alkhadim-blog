@@ -87,6 +87,7 @@ model Settings {
   logoUrl            String?
   faviconUrl         String?
   metaImage          String?
+  metaKeywords       String?
   primaryColor       String  @default("#1a2b3c")
   accentColor        String  @default("#3b82f6")
   headerStyle        String  @default("default")

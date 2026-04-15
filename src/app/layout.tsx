@@ -25,12 +25,12 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ourwebsite.com";
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await prisma.settings.findFirst();
   
-  const siteName = settings?.siteName || "Our Website";
+  const siteName = settings?.siteName || "Blog";
   const faviconUrl = settings?.faviconUrl || "/favicon.ico";
-  const title = `${siteName} — Political News & Analysis`;
-  const description = settings?.siteDescription || 
-    "Your trusted source for political news, in-depth analysis, and expert commentary on wars, international politics, diplomacy, military affairs, and geopolitics.";
+  const title = siteName;
+  const description = settings?.siteDescription || "Latest news, auto-generated and curated.";
   const metaImage = settings?.metaImage || `${siteUrl}/og-default.jpg`;
+  const metaKeywords = settings?.metaKeywords ? settings.metaKeywords.split(',') : ["news", "blog", "articles"];
 
   return {
     title: {
@@ -38,11 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${siteName}`,
     },
     description,
-    keywords: [
-      "news", "politics", "war", "conflict", "international politics",
-      "diplomacy", "military", "geopolitics", "analysis", "breaking news",
-      "world news", "political analysis", "defense", "foreign policy",
-    ],
+    keywords: metaKeywords,
     authors: [{ name: siteName }],
     creator: siteName,
     publisher: siteName,
